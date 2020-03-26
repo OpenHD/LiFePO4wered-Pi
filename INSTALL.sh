@@ -20,9 +20,6 @@ install -p -T initscript /etc/init.d/$DAEMON_NAME
 # Set the daemon directory in the init script
 sed -i "s:DAEMON_DIRECTORY:$PREFIX/sbin:" /etc/init.d/$DAEMON_NAME
 
-# Enable the service to start on boot
-update-rc.d $DAEMON_NAME defaults
-
 
 # Check whether I2C is enabled in the device tree
 if ! grep -q ^dtparam=i2c_arm=on /boot/config.txt
