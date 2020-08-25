@@ -1,0 +1,39 @@
+FROM openhd/rootfs_friendlycore_4.14-neo2:v1
+
+COPY .git /data/.git/
+COPY bindings /data/bindings/
+COPY boards /data/boards/
+COPY build.py /data/
+COPY fabricate.py /data/
+COPY initscript /data/
+COPY INSTALL.sh /data/
+COPY lifepo4wered-access.c /data/
+COPY lifepo4wered-access.h /data/
+COPY lifepo4wered-data.c /data/
+COPY lifepo4wered-data.h /data/
+COPY lifepo4wered-cli.c /data/
+COPY lifepo4wered-daemon.c /data/
+
+COPY package.sh /data/
+
+RUN apt update
+
+RUN apt -y install git
+
+RUN apt -y install ruby-dev
+
+RUN apt -y install python3-pip
+
+RUN apt -y purge python-configparser
+
+RUN gem install fpm
+
+RUN pip3 install cloudsmith-cli
+
+WORKDIR /data
+
+ARG CLOUDSMITH_API_KEY=000000000000
+
+RUN export CLOUDSMITH_API_KEY=$CLOUDSMITH_API_KEY
+
+RUN /data/package.sh arm64 ubuntu xenial docker
