@@ -1,4 +1,4 @@
-FROM openhd/2020-05-27-raspios-buster-lite-armhf:v1
+FROM openhd/2020-05-27-raspios-buster-lite-armhf:v2
 
 COPY .git /data/.git/
 COPY bindings /data/bindings/
@@ -17,18 +17,6 @@ COPY lifepo4wered-daemon.c /data/
 COPY package.sh /data/
 
 RUN apt update
-
-RUN apt -y install git
-
-RUN apt -y install ruby-dev
-
-RUN apt -y install python-pip python-setuptools
-
-RUN apt -y purge python-configparser
-
-RUN gem install fpm
-
-RUN pip install cloudsmith-cli==0.23.0
 
 WORKDIR /data
 
